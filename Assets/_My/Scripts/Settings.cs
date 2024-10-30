@@ -17,7 +17,8 @@ public class Settings : MonoBehaviour
     private BigInteger payGold = 1;
     private BigInteger dropGold = 1;
 
-    private int stage = 1;
+    public int stage = 1;
+    public int enemyCount = 6;
 
 
 
@@ -90,8 +91,34 @@ public class Settings : MonoBehaviour
     // Enemy Hp 상태 표시 
     public float GetEnemyHpVal()
     {
-        float hp = (float) enemyHP / (float) newEnemyHP;
+        float hp = (float)enemyHP / (float)newEnemyHP;
 
         return hp;
+    }
+
+    private string FormatNum(BigInteger num)
+    {
+        string[] units = { "", "K", "M", "Y", "T" };
+        int unitIndex = 0;
+
+        while (num > 1000 && unitIndex < units.Length - 1)
+        {
+            num /= 1000;
+            unitIndex++;
+        }
+
+        string fNum = string.Format("{0}{1}", num.ToString(), units[unitIndex]);
+
+        return fNum;
+    }
+
+    public string stringGold()
+    {
+        return FormatNum(gold);
+    }
+
+    public string stringPayGold()
+    {
+        return FormatNum(payGold);
     }
 }

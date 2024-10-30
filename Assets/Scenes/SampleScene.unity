@@ -415,7 +415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30.00003, y: -14}
+  m_AnchoredPosition: {x: -30, y: -14}
   m_SizeDelta: {x: 30, y: 20}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &224745702
@@ -886,7 +886,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 380265311}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 748833452}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: BtnLvUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &380265311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1517,13 +1529,15 @@ MonoBehaviour:
   hitTime: 0.4
   attackClip: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
   hitClip: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
-  enemyObj: {fileID: 4600946268557953341, guid: 91fdc3fbbf34b41f7bb095c7ecbd5b88, type: 3}
+  enemyObjs:
+  - {fileID: 4600946268557953341, guid: 91fdc3fbbf34b41f7bb095c7ecbd5b88, type: 3}
+  - {fileID: 5697810205675297890, guid: 5a36c68ffea444da08a404224bf00973, type: 3}
   enemySpawn: {fileID: 417559816}
   isSpawn: 1
   imageEnemyHP: {fileID: 351793784}
   textGold: {fileID: 1938152984}
   textPayGold: {fileID: 1938754553}
-  textStageGold: {fileID: 1730784669}
+  textStageCount: {fileID: 1730784669}
   textEnemyCount: {fileID: 1441104085}
 --- !u!4 &748833453
 Transform:
@@ -1648,6 +1662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04b1ff137f854c2e8dd45eb4fde9285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stage: 1
+  enemyCount: 6
 --- !u!1 &997295474
 GameObject:
   m_ObjectHideFlags: 0

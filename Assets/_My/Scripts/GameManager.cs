@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private AudioSource audioSource;
 
     [Header("Enemy")]
-    public GameObject enemyObj; // 가져와야 하는 프리팹 
+    public GameObject[] enemyObjs; // 가져와야 하는 프리팹 
     public GameObject enemySpawn;
     public bool isSpawn = true;
 
@@ -27,13 +27,8 @@ public class GameManager : MonoBehaviour
     public Image imageEnemyHP;
     public TextMeshProUGUI textGold;
     public TextMeshProUGUI textPayGold;
-    public TextMeshProUGUI textStageGold;
+    public TextMeshProUGUI textStageCount;
     public TextMeshProUGUI textEnemyCount;
-
-
-
-
-
 
     private Settings setting;
 
@@ -46,6 +41,11 @@ public class GameManager : MonoBehaviour
         playerAnim = player.GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         setting = GetComponent<Settings>();
+
+        textGold.text = setting.stringGold();
+        textPayGold.text = setting.stringPayGold();
+        textStageCount.text = setting.stage.ToString();
+        textEnemyCount.text = setting.enemyCount.ToString();
     }
 
 
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     {
         EnemySpawn();
         MouseOnClick();
+        ShowEnemyHP();
     }
 
     private bool IsAttackChk()
@@ -94,6 +95,9 @@ public class GameManager : MonoBehaviour
             {
                 enemy.EnemyDie();
                 setting.GetEnemyHP();
+                setting.GetGold();
+                textGold.text = setting.stringGold();
+
                 isSpawn = true;
             }
         }
@@ -138,10 +142,35 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
-        setting.initEnemyHP();
-        Instantiate(enemyObj, enemySpawn.transform.position, Quaternion.identity);
-
+        // enemyCount 감소 
+        setting.enemyCount -= 1;
+        if (setting.enemyCount <= 0)
+        {
+            setting.stage += 1;
+            textStageCount.text = setting.stage.ToString();
+            setting.enemyCount = 6;
+            setting.initEnemyHP();
+        }
+        textEnemyCount.text = setting.enemyCount.ToString();
+        int ran = Random.Range(0, 2);
+        Instantiate(enemyObjs[ran], enemySpawn.transform.position, Quaternion.identity);
     }
+
+    // Enemy HP 표시 
+    private void ShowEnemyHP()
+    {
+        imageEnemyHP.fillAmount = setting.GetEnemyHpVal();
+    }
+
+    // 레벨업 버튼 
+    public void BtnLvUp()
+    {
+        setting.LvUpPayGold();
+        textGold.text = setting.stringGold();
+        textPayGold.text = setting.stringPayGold();
+    }
+
+
 
 
 }
